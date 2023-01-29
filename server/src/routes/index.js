@@ -12,6 +12,7 @@ router.get('/', (req, res) => {
 });
 router.post('/', validate, controller.createUser);
 router.get('/users', controller.listUser);
+router.get('/detail/:id', controller.userDetail);
 router.patch('/:id', validate, controller.updateUser);
 
 module.exports = router;

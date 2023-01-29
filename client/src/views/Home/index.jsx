@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import Sidebar from "../../components/Sidebar";
+import { DataGrid } from "@mui/x-data-grid";
+import SearchIcon from "@mui/icons-material/Search";
 import {
   Breadcrumbs,
   Link,
@@ -8,8 +10,6 @@ import {
   TextField,
   FormLabel,
 } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
-import SearchIcon from "@mui/icons-material/Search";
 
 import { listUserAction } from "../../redux/actions";
 import { connect } from "react-redux";
@@ -24,6 +24,7 @@ export class Home extends Component {
       search: "",
       by: "id",
       order: "asc",
+      mouseEnterIconSearch: false,
       // limit: 10,
       // page: 1
     };
@@ -61,7 +62,21 @@ export class Home extends Component {
 
   render() {
     const { userListData } = this.props;
-    const { search } = this.state;
+    const { search, mouseEnterIconSearch } = this.state;
+
+    let dataTable = [];
+    const no = 1;
+
+    userListData.forEach((data, idx) => {
+      dataTable.push({
+        no: no + idx,
+        id: data.id,
+        email: data.email,
+        fullname: data.fullname,
+        created_at: data.created_at,
+      });
+    });
+
     return (
       <React.Fragment>
         <Sidebar>
@@ -95,14 +110,40 @@ export class Home extends Component {
                 this.setState({ search: e.target.value });
               }}
             />
-            <SearchIcon onClick={this.onSearch} sx={{ cursor: "pointer" }} />
+            <Box
+              sx={{
+                border: 1,
+                padding: 1,
+                pt: 2,
+                px: 1,
+                borderRadius: 1,
+                color: "gray",
+                cursor: "pointer",
+                backgroundColor: mouseEnterIconSearch
+                  ? "rgba(108, 122, 137, 0.1)"
+                  : "",
+                borderColor: mouseEnterIconSearch
+                  ? "black"
+                  : "rgba(108, 122, 137, 0.6)",
+              }}
+              onClick={this.onSearch}
+              onMouseEnter={() => {
+                this.setState({ mouseEnterIconSearch: true });
+              }}
+              onMouseLeave={() => {
+                this.setState({ mouseEnterIconSearch: false });
+              }}
+            >
+              <SearchIcon sx={{ color: mouseEnterIconSearch ? "#000" : "" }} />
+            </Box>
           </FormLabel>
 
           <Box style={{ height: 400, width: "100%" }}>
             <DataGrid
               columns={columns}
               pageSize={5}
-              rows={userListData}
+              rows={dataTable}
+              rowsPerPageOptions={[5]}
               componentsProps={{
                 oncontextmenu: this.handleContextMenu,
                 style: { cursor: "context-menu" },

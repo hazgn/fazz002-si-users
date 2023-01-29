@@ -18,7 +18,7 @@ const createUser = (body) => {
       if (err) reject({ status: 500, err });
 
       if (result.length > 0)
-        reject({ status: 400, err: 'Email is Already exist!' });
+        return reject({ status: 400, err: 'Email is Already exist!' });
 
       const sqlQuery = `INSERT INTO users SET ?`;
 
@@ -131,12 +131,35 @@ const listUser = (query) => {
   });
 };
 
-const updateUser = () => {
-  new Promise((resolve, reject) => {});
+const userDetail = (id) => {
+  return new Promise((resolve, reject) => {
+    const sqlQuery = `SELECT * FROM users WHERE id = ?`;
+    db.query(sqlQuery, [id], (err, result) => {
+      if (err) reject({ status: 500, err });
+
+      if (result.length <= 0)
+        return reject({ status: 400, err: 'User Not Found!' });
+
+      resolve({
+        status: 200,
+        result: {
+          id: result[0].id,
+          fullname: result[0].fullname,
+          email: result[0].email,
+          created_at: result[0].created_at,
+        },
+      });
+    });
+  });
+};
+
+const updateUser = (id) => {
+  return new Promise((resolve, reject) => {});
 };
 
 module.exports = {
   createUser,
   listUser,
+  userDetail,
   updateUser,
 };

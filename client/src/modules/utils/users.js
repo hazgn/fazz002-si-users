@@ -12,3 +12,7 @@ export const getListUser = (params) => {
     `${baseUrl}/users?search=${search}&by=${by}&order=${order}`
   );
 };
+
+export const getUserDetail = ({ id }) => {
+  return axios.get(`${baseUrl}/detail/${id}`);
+};

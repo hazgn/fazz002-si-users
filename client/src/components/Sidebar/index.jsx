@@ -9,21 +9,23 @@ import Header from "../Header";
 
 const drawerWidth = 256;
 
+import useMediaSm from "./useMediaSm";
+
 export class Sidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isMobile: false,
-      isSmUp: window.innerWidth,
+      isOpen: false,
     };
   }
 
   handleDrawerToggle = () => {
-    this.setState({ isMobile: !this.state.isMobile });
+    this.setState({ isOpen: !this.state.isOpen });
   };
 
   render() {
-    const { isSmUp, isMobile } = this.state;
+    const { isSmUp } = this.props;
+    const { isOpen } = this.state;
     return (
       <ThemeProvider theme={theme}>
         <Box sx={{ display: "flex", minHeight: "100vh" }}>
@@ -32,11 +34,11 @@ export class Sidebar extends Component {
             component="nav"
             sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
           >
-            {isSmUp <= 640 ? null : (
+            {isSmUp ? null : (
               <Navigator
                 PaperProps={{ style: { width: drawerWidth } }}
                 variant="temporary"
-                open={isMobile}
+                open={isOpen}
                 onClose={this.handleDrawerToggle}
               />
             )}
@@ -60,4 +62,4 @@ export class Sidebar extends Component {
   }
 }
 
-export default Sidebar;
+export default useMediaSm(Sidebar);

@@ -25,6 +25,18 @@ const listUser = (req, res) => {
     });
 };
 
+const userDetail = (req, res) => {
+  const { params } = req;
+  models
+    .userDetail(params.id)
+    .then(({ status, result }) => {
+      return response.success(res, status, result);
+    })
+    .catch(({ status, err }) => {
+      return response.error(res, status, err);
+    });
+};
+
 const updateUser = (req, res) => {
   const { params, body } = req;
   const { id } = params;
@@ -41,5 +53,6 @@ const updateUser = (req, res) => {
 module.exports = {
   createUser,
   listUser,
+  userDetail,
   updateUser,
 };
