@@ -7,6 +7,7 @@ import moment from "moment";
 
 import { connect } from "react-redux";
 import { userDetailAction } from "../../redux/actions";
+import { Navigate } from "react-router-dom";
 
 import useMediaSM from "../../components/Sidebar/useMediaSm";
 import imageUserDefault from "../../assets/images/default_users.jpg";
@@ -16,7 +17,8 @@ export class Detail extends Component {
     this.props.userDetailDispatch({ id: this.props.params.id });
   }
   render() {
-    const { isSmUp, userData } = this.props;
+    const { isSmUp, userData, isError } = this.props;
+
     return (
       <React.Fragment>
         <Sidebar>
@@ -85,6 +87,7 @@ export class Detail extends Component {
               </Box>
             </Box>
           </Box>
+          {isError && <Navigate to="/" replace={true} />}
         </Sidebar>
       </React.Fragment>
     );
@@ -102,6 +105,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     userData: state.userDetail.userData,
+    isError: state.userDetail.isError,
   };
 };
 
