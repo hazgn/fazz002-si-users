@@ -27,13 +27,14 @@ const createUser = (body) => {
         created_at: new Date(),
       };
 
-      db.query(sqlQuery, [body], (err) => {
+      db.query(sqlQuery, [body], (err, result) => {
         if (err) reject({ status: 500, err });
 
         resolve({
           status: 200,
           result: {
             message: 'Success Create Users',
+            id: result.insertId,
             fullname: fullname,
             email: email,
           },
