@@ -12,6 +12,7 @@ export default combineReducers({
       userListData: [],
       meta: {},
       isError: false,
+      isSuccess: false,
       errorMessage: "",
     },
     actions
@@ -28,6 +29,7 @@ export default combineReducers({
           ...prevState,
           userListData: actions.payload.data.result.data,
           meta: actions.payload.data.result.meta,
+          isSuccess: true,
           isError: false,
         };
 
@@ -35,6 +37,7 @@ export default combineReducers({
         return {
           ...prevState,
           isError: true,
+          isSuccess: false,
           errorMessage: "Internal Server Error!",
         };
 
@@ -46,6 +49,7 @@ export default combineReducers({
     prevState = {
       userData: {},
       isError: false,
+      isSuccess: false,
       errorMessage: "",
     },
     actions
@@ -61,6 +65,7 @@ export default combineReducers({
         return {
           ...prevState,
           userData: actions.payload.data.result,
+          isSuccess: true,
           isError: false,
         };
 
@@ -68,6 +73,7 @@ export default combineReducers({
         return {
           ...prevState,
           isError: true,
+          isSuccess: false,
           errorMessage: "Internal Server Error!",
         };
 

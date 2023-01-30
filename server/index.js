@@ -20,7 +20,7 @@ server.listen(port, () => {
 server.use(
   cors({
     origin: '*',
-    methods: ['GET', 'POST', 'UPDATE', 'DELETE', 'OPTIONS'],
+    method: ['GET', 'POST', 'PATCH', 'DETELE', 'OPTIONS'],
   })
 );
 server.use(express.json());

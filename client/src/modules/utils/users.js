@@ -16,3 +16,7 @@ export const getListUser = (params) => {
 export const getUserDetail = ({ id }) => {
   return axios.get(`${baseUrl}/detail/${id}`);
 };
+
+export const patchUserUpdate = (id, body) => {
+  return axios.patch(`${baseUrl}/${id}`, body);
+};

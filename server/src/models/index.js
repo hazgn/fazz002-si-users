@@ -154,8 +154,50 @@ const userDetail = (id) => {
   });
 };
 
-const updateUser = (id) => {
-  return new Promise((resolve, reject) => {});
+const updateUser = (id, body) => {
+  const { email, fullname } = body;
+  const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+  return new Promise((resolve, reject) => {
+    if (!email || !fullname)
+      reject({ status: 401, err: 'Need input fullname & email!' });
+
+    if (!emailPattern.test(email))
+      reject({ status: 400, err: 'Format Email Invalid!' });
+
+    const checkUserId = `SELECT * FROM users WHERE id = ? `;
+    db.query(checkUserId, [id], (err, result) => {
+      if (err) reject({ status: 500, err });
+
+      if (result.length <= 0)
+        return reject({ status: 400, err: 'User Not Found!' });
+
+      const checkEmail = `SELECT * FROM users WHERE email = ?`;
+      db.query(checkEmail, [email], (err, result) => {
+        if (err) reject({ status: 500, err });
+
+        if (
+          result.length > 0 &&
+          result[0].id !== parseInt(id) &&
+          result[0].email === email
+        )
+          return reject({ status: 401, err: 'Email Is Already' });
+
+        const sqlQuery = `UPDATE users SET ? WHERE id =  ${id}`;
+
+        db.query(sqlQuery, [body], (err) => {
+          if (err) reject({ status: 500, err });
+
+          resolve({
+            status: 200,
+            result: {
+              message: 'Success Change Users',
+            },
+          });
+        });
+      });
+    });
+  });
 };
 
 module.exports = {

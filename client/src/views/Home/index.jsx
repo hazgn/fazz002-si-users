@@ -24,9 +24,9 @@ export class Home extends Component {
       search: "",
       by: "id",
       order: "asc",
-      mouseEnterIconSearch: false,
       // limit: 10,
       // page: 1
+      mouseEnterIconSearch: false,
     };
   }
 

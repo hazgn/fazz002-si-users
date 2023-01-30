@@ -47,8 +47,18 @@ export const columns = [
           alignItems: "center",
         }}
       >
-        <Link href={`/${formattedValue}/detail`} sx={{ textDecoration: "none" }}>
+        <Link
+          href={`/${formattedValue}/detail`}
+          sx={{ textDecoration: "none" }}
+        >
           <Typography>Detail</Typography>
+        </Link>
+        <Typography>|</Typography>
+        <Link
+          href={`/edit/${formattedValue}`}
+          sx={{ textDecoration: "none", color: "green" }}
+        >
+          <Typography>Edit</Typography>
         </Link>
         <Typography>|</Typography>
         <Typography

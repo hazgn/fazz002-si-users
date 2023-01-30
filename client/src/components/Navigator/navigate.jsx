@@ -17,7 +17,7 @@ export const categories = [
       {
         id: "Edit Users",
         icon: <Edit />,
-        link: "/edit",
+        link: `/edit/null`,
       },
       {
         id: "Delete Users",
