@@ -20,7 +20,7 @@ export const categories = [
         link: `/edit/null`,
       },
       {
-        id: "Delete Users",
+        id: "Delete Mutiple Users",
         icon: <PersonRemove />,
         link: "/delete",
       },

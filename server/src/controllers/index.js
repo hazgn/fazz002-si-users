@@ -50,9 +50,36 @@ const updateUser = (req, res) => {
     });
 };
 
+const deleteUserById = (req, res) => {
+  const { id } = req.params;
+  models
+    .deleteUserById(id)
+    .then(({ status, result }) => {
+      return response.success(res, status, result);
+    })
+    .catch(({ status, err }) => {
+      return response.error(res, status, err);
+    });
+};
+
+const deleteMultiple = (req, res) => {
+  const { body } = req;
+
+  models
+    .deleteMultiple(body)
+    .then(({ status, result }) => {
+      return response.success(res, status, result);
+    })
+    .catch(({ status, err }) => {
+      return response.error(res, status, err);
+    });
+};
+
 module.exports = {
   createUser,
   listUser,
   userDetail,
   updateUser,
+  deleteUserById,
+  deleteMultiple,
 };

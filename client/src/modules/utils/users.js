@@ -20,3 +20,7 @@ export const getUserDetail = ({ id }) => {
 export const patchUserUpdate = (id, body) => {
   return axios.patch(`${baseUrl}/${id}`, body);
 };
+
+export const deleteUserById = (id) => {
+  return axios.delete(`${baseUrl}/${id}`);
+};

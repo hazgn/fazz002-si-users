@@ -1,6 +1,10 @@
 import { Box, Typography, Link } from "@mui/material";
 import moment from "moment";
 
+import Swal from "sweetalert2";
+
+import { deleteUserById } from "../../modules/utils/users";
+
 export const columns = [
   {
     headerName: "No",
@@ -64,7 +68,42 @@ export const columns = [
         <Typography
           sx={{ color: "red", cursor: "pointer" }}
           onClick={() => {
-            alert(formattedValue);
+            const swalWithBootstrapButtons = Swal.mixin({
+              customClass: {
+                confirmButton: "btn btn-danger",
+                cancelButton: "btn btn-secondary",
+              },
+              buttonsStyling: true,
+            });
+            swalWithBootstrapButtons
+              .fire({
+                title: "Are you sure you want Delete ?",
+                text: "once the data is deleted it will not be able to return!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, Delete",
+                cancelButtonText: "No, Cancel!",
+                reverseButtons: false,
+              })
+              .then((result) => {
+                if (result.isConfirmed) {
+                  deleteUserById(formattedValue).then(() => {
+                    swalWithBootstrapButtons.fire({
+                      title: "Delete User is Successed",
+                      icon: "success",
+                    });
+                    setTimeout(() => {
+                      location.reload();
+                    }, 2500);
+                  });
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                  swalWithBootstrapButtons.fire(
+                    "Cancelled",
+                    "Ok, Data is still safe",
+                    "info"
+                  );
+                }
+              });
           }}
         >
           Delete

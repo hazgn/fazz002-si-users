@@ -200,9 +200,66 @@ const updateUser = (id, body) => {
   });
 };
 
+const deleteUserById = (id) => {
+  return new Promise((resolve, reject) => {
+    const checkUserId = `SELECT * FROM users WHERE id = ?`;
+    db.query(checkUserId, [id], (err, result) => {
+      if (err) reject({ status: 500, err });
+
+      if (result.length <= 0)
+        return reject({ status: 400, err: 'User Not Found!' });
+
+      const sqlQuery = `DELETE FROM users WHERE id = ?`;
+
+      db.query(sqlQuery, [id], (err) => {
+        if (err) reject({ status: 500, err });
+
+        resolve({
+          status: 200,
+          result: {
+            message: 'Success Delete Users',
+          },
+        });
+      });
+    });
+  });
+};
+
+const deleteMultiple = (body) => {
+  const { idBatch } = body;
+  return new Promise((resolve, reject) => {
+    if (!body.idBatch) return reject({ status: 400, err: 'Invalid Input' });
+
+    let idBatchValue = '';
+
+    idBatch.forEach((data, idx) => {
+      if (idx !== idBatch.length - 1) {
+        idBatchValue += ` ${data}, `;
+      } else {
+        idBatchValue += ` ${data} `;
+      }
+    });
+
+    const sqlQuery = `DELETE from users WHERE id IN ( ${idBatchValue} )`;
+
+    db.query(sqlQuery, (err, result) => {
+      if (err) reject({ status: 500, err });
+
+      resolve({
+        status: 200,
+        result: {
+          message: 'Success Delete Users',
+        },
+      });
+    });
+  });
+};
+
 module.exports = {
   createUser,
   listUser,
   userDetail,
   updateUser,
+  deleteUserById,
+  deleteMultiple,
 };
