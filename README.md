@@ -122,3 +122,7 @@ Open http://localhost:5173
 ### example Deployment
 
 ---
+
+### `Rest Api` <https://fazz002-si-users-api.vercel.app>
+
+### `Frontend` <https://fazz002-si-users-react.vercel.app>
