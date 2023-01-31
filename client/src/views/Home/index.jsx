@@ -20,12 +20,12 @@ export class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      contextMenu: null,
       search: "",
       by: "id",
       order: "asc",
       // limit: 10,
-      // page: 1
+      // page: 1,
+      contextMenu: null,
       mouseEnterIconSearch: false,
     };
   }

@@ -7,6 +7,7 @@ import Home from "./views/Home";
 import Detail from "./views/Detail";
 import Create from "./views/Create";
 import Edit from "./views/Edit";
+import Delete from "./views/Delete";
 import NotFound from "./views/NotFound";
 
 import store from './redux/store'
@@ -21,6 +22,7 @@ export class App extends Component {
             <Route path="/:id/detail" element={<Detail />} />
             <Route path="/create" element={<Create />} />
             <Route path="/edit/:id" element={<Edit />} />
+            <Route path='/delete' element={<Delete />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

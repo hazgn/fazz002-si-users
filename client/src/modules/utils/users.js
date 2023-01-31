@@ -24,3 +24,7 @@ export const patchUserUpdate = (id, body) => {
 export const deleteUserById = (id) => {
   return axios.delete(`${baseUrl}/${id}`);
 };
+
+export const deleteUserMutiple = (body) => {
+  return axios.delete(`${baseUrl}/delete/multiple`, { data: body });
+};

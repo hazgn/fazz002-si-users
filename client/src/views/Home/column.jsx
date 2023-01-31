@@ -75,6 +75,7 @@ export const columns = [
               },
               buttonsStyling: true,
             });
+            
             swalWithBootstrapButtons
               .fire({
                 title: "Are you sure you want Delete ?",
